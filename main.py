@@ -4,10 +4,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-guild = int(os.getenv("GUILD_ID"))
-token = os.getenv("DISCORD_TOKEN")
+GUILD = int(os.getenv("GUILD_ID"))
+TOKEN = os.getenv("DISCORD_TOKEN")
+GLENTRE_STATUS_CHANNEL_ID = int(os.getenv("GLENTRE_STATUS_CHANNEL_ID"))
 
-bot = discord.Bot(debug_guilds=[guild])
+bot = discord.Bot(debug_guilds=[GUILD])
 
 @bot.event
 async def on_ready():
@@ -23,16 +24,18 @@ async def hello(ctx):
         await ctx.guild.members[0].edit(nick="new?")
 
 
-@bot.slash_command(name = "glentre-status", description = "Toggle whether the glentre is currently open or closed.")
-async def glentre_open(ctx):
+@bot.event
+async def on_message(message):
+    if message.author == bot.user or message.channel.id != GLENTRE_STATUS_CHANNEL_ID:
+        return
+
     prefix = "glentre-"
-    if "closed" in ctx.channel.name:
-        status = "open✅"
+    if "closed" in message.channel.name:
+        status = "open ✅"
     else:
-        status = "closed❌"
-    print(bot.is_ws_ratelimited())
+        status = "closed ❌"
+    
+    await message.channel.send(f"The Glentre is now {status}!")
+    await message.channel.edit(name=prefix + status)
 
-    await ctx.channel.edit(name=prefix + status)
-    await ctx.respond(f"Glentre is now {status}")
-
-bot.run(token)
+bot.run(TOKEN)
