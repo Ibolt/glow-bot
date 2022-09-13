@@ -10,6 +10,7 @@ GLENTRE_STATUS_CHANNEL_ID = int(os.getenv("GLENTRE_STATUS_CHANNEL_ID"))
 
 bot = discord.Bot(debug_guilds=[GUILD])
 
+
 @bot.event
 async def on_ready():
     print(f"{bot.user} is ready and online!")
@@ -18,10 +19,6 @@ async def on_ready():
 @bot.slash_command(name = "hello", description = "Say hi to georbert")
 async def hello(ctx):
     await ctx.respond("hi :ohheheimthecutest:")
-    if ctx.guild.members[0].nick == "new?":
-        await ctx.guild.members[0].edit(nick="old!")
-    else:
-        await ctx.guild.members[0].edit(nick="new?")
 
 
 @bot.event
