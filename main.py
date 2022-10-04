@@ -18,7 +18,7 @@ async def on_ready():
 
 @bot.slash_command(name = "hello", description = "Say hi to georbert")
 async def hello(ctx):
-    await ctx.respond("hi :ohheheimthecutest:")
+    await ctx.respond("hi <:ohheheimthecutest:961069609413378108>")
 
 
 @bot.event
