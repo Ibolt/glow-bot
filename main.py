@@ -27,11 +27,9 @@ async def on_ready():
 @bot.slash_command(name = "hello", description = "Say hi to georbert")
 async def hello(ctx):
     intro_list = [
-            "",
             "omg",
             ":eyes:",
             "oh",
-            "oh,"
     ]
     greeting_list = [
         "hi",
@@ -67,15 +65,18 @@ async def hello(ctx):
     ]
 
     default_str = ""
-    # string has a 50% chance to start with a keysmash
-    if random.randint(1,100) < 50:
+
+    # string has a 30% chance to start with a keysmash
+    if random.randint(1,100) < 30:
         for i in range(random.randint(3,5)):
             # string is consonants weighted to include more of the middle keys
             default_str += random.choice('sdfjk')
         for i in range(random.randint(5,10)):
             # string is consonants weighted to include more of the middle keys
             default_str += random.choice('bcdfghjklmnpqrstvwxzasdfghjkli;')
-    else:
+    
+    # string has a 30% chance to have an extra intro
+    if random.randint(1,100) < 30:
         default_str = random.choice(intro_list)
 
     # string has a 50% chance to have 2 greetings
@@ -151,7 +152,7 @@ async def hello(ctx):
         
         formats = [
             "\nYou should {0} today!",
-            "\nYou should {0}!",
+            "\nIf you have time, {0}!",
             "\nIf you're bored, you should {0}!",
             "\nYou can always {0} if you're bored!",
             "\nYou might want to {0}!",
