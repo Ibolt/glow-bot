@@ -216,10 +216,22 @@ async def gen_lastfm_auth_url(ctx, lastfm_username: discord.Option(str)):
 
         await ctx.respond(f"Scrobbles for past 7 days: {scrobbles}")
 
-    print(resp)
-
     # auth_url = f"http://www.last.fm/api/auth/?api_key={LAST_FM_API_KEY}"
     # await ctx.respond(f"Authorize georbert to display your Last.fm stats by clicking the following link: {auth_url}")
+
+
+@bot.slash_command(name="eepy", description="For when you're feeling a bit eepy.")
+async def eepy(ctx):
+    await ctx.respond(
+        "https://media.tenor.com/izCcDz-s6XoAAAAC/eepy-and-why-he-eepy.gif"
+    )
+
+
+@bot.slash_command(name="zawarudo", description="Weeb.")
+async def stand(ctx):
+    await ctx.respond(
+        "https://media.discordapp.net/attachments/1020012959369531503/1032745623432208485/Untitled_Artwork.png?width=439&height=754"
+    )
 
 
 bot.run(TOKEN)
