@@ -6,15 +6,12 @@ from dotenv import load_dotenv
 import random
 import requests
 import aiohttp
-import string
 
 load_dotenv()
 
 GUILD = int(os.getenv("GUILD_ID"))
 TOKEN = os.getenv("DISCORD_TOKEN")
 GLENTRE_STATUS_CHANNEL_ID = int(os.getenv("GLENTRE_STATUS_CHANNEL_ID"))
-LAST_FM_API_KEY = os.getenv("LAST_FM_API_KEY")
-LAST_FM_URL = "https://ws.audioscrobbler.com/2.0/"
 
 bot = discord.Bot()
 
@@ -191,33 +188,6 @@ async def update_status(ctx):
 
     await ctx.respond(f"The Glentre is now {status}!")
     await ctx.channel.edit(name=prefix + status)
-
-
-@bot.slash_command(
-    name="scrobble-report",
-    description="Get current scrobble stats for all last.fm users.",
-)
-async def gen_lastfm_auth_url(ctx, lastfm_username: discord.Option(str)):
-    headers = {"user-agent": "Georbert"}
-    payload = {
-        "api_key": LAST_FM_API_KEY,
-        "method": "user.getWeeklyTrackChart",
-        "user": lastfm_username,
-        "format": "json",
-    }
-    resp = requests.get(LAST_FM_URL, headers=headers, params=payload)
-    if resp.status_code != 200:
-        await ctx.respond(f"Failed to retrieve scrobbles for user.")
-    else:
-        scrobbles = 0
-        track_chart = json.loads(resp.content)["weeklytrackchart"]
-        for track in track_chart["track"]:
-            scrobbles += int(track["playcount"])
-
-        await ctx.respond(f"Scrobbles for past 7 days: {scrobbles}")
-
-    # auth_url = f"http://www.last.fm/api/auth/?api_key={LAST_FM_API_KEY}"
-    # await ctx.respond(f"Authorize georbert to display your Last.fm stats by clicking the following link: {auth_url}")
 
 
 @bot.slash_command(name="eepy", description="For when you're feeling a bit eepy.")
