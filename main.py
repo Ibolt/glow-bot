@@ -1,21 +1,11 @@
-import datetime
 import discord
-import os
 import random
 import aiohttp
 
-from datetime import datetime, timedelta, timezone
+from constants import *
+from datetime import datetime
 from discord.ext import commands, tasks
-from dotenv import load_dotenv
 
-load_dotenv()
-
-EST = timezone(timedelta(hours=-5), 'EST')
-GLENTRE_PREFIX = "glentre-"
-
-GUILD = int(os.getenv("GUILD_ID"))
-TOKEN = os.getenv("DISCORD_TOKEN")
-GLENTRE_STATUS_CHANNEL_ID = int(os.getenv("GLENTRE_STATUS_CHANNEL_ID"))
 
 bot = discord.Bot()
 
@@ -29,15 +19,16 @@ async def update_glentre_status(ctx=None):
     else:
         channel = bot.get_channel(GLENTRE_STATUS_CHANNEL_ID)
 
-    if "closed" in channel.name:
-        status = "open ✅"
+    if GLENTRE_CLOSED_IDENTIFIER in channel.name:
+        status = GLENTRE_OPEN_STATUS
     else:
-        status = "closed ❌"
+        status = GLENTRE_CLOSED_STATUS
 
+    msg = f"The Glentre is now {status}!"
     if ctx:
-        await ctx.respond(f"The Glentre is now {status}!")
+        await ctx.respond(msg)
     else:
-        await channel.send(f"The Glentre is now {status}!")
+        await channel.send(msg)
     await channel.edit(name=GLENTRE_PREFIX + status)
 
 
@@ -52,7 +43,7 @@ class EventLoopCog(commands.Cog):
     @tasks.loop(seconds=60.0)
     async def close_glentre(self):
         now = datetime.now(tz=EST)
-        if (now.hour == 0 and "closed" not in bot.get_channel(GLENTRE_STATUS_CHANNEL_ID)):
+        if (now.hour == 0 and GLENTRE_CLOSED_IDENTIFIER not in bot.get_channel(GLENTRE_STATUS_CHANNEL_ID)):
                 await update_glentre_status()
 
 
