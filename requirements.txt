@@ -1,4 +1,4 @@
 python-dotenv
-py-cord[speed]==2.0.0rc1
+py-cord
 pylast
 requests

@@ -1,13 +1,17 @@
+import datetime
 import discord
-import json
 import os
-import requests
-from dotenv import load_dotenv
 import random
-import requests
 import aiohttp
 
+from datetime import datetime, timedelta, timezone
+from discord.ext import commands, tasks
+from dotenv import load_dotenv
+
 load_dotenv()
+
+EST = timezone(timedelta(hours=-5), 'EST')
+GLENTRE_PREFIX = "glentre-"
 
 GUILD = int(os.getenv("GUILD_ID"))
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -15,9 +19,46 @@ GLENTRE_STATUS_CHANNEL_ID = int(os.getenv("GLENTRE_STATUS_CHANNEL_ID"))
 
 bot = discord.Bot()
 
+async def update_glentre_status(ctx=None):
+    channel = None
+    if ctx:
+        if ctx.channel.id != GLENTRE_STATUS_CHANNEL_ID:
+            return
+        else:
+            channel = ctx.channel
+    else:
+        channel = bot.get_channel(GLENTRE_STATUS_CHANNEL_ID)
+
+    if "closed" in channel.name:
+        status = "open ✅"
+    else:
+        status = "closed ❌"
+
+    if ctx:
+        await ctx.respond(f"The Glentre is now {status}!")
+    else:
+        await channel.send(f"The Glentre is now {status}!")
+    await channel.edit(name=GLENTRE_PREFIX + status)
+
+
+class EventLoopCog(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+        self.close_glentre.start()
+
+    def cog_unload(self):
+        self.close_glentre.cancel()
+
+    @tasks.loop(seconds=60.0)
+    async def close_glentre(self):
+        now = datetime.now(tz=EST)
+        if (now.hour == 0 and "closed" not in bot.get_channel(GLENTRE_STATUS_CHANNEL_ID)):
+                await update_glentre_status()
+
 
 @bot.event
 async def on_ready():
+    bot.add_cog(EventLoopCog(bot))
     print(f"{bot.user} is ready and online!")
 
 
@@ -177,17 +218,7 @@ async def hello(ctx):
     name="glentre-status", description="Change the glentre status from closed/open."
 )
 async def update_status(ctx):
-    if ctx.channel.id != GLENTRE_STATUS_CHANNEL_ID:
-        return
-
-    prefix = "glentre-"
-    if "closed" in ctx.channel.name:
-        status = "open ✅"
-    else:
-        status = "closed ❌"
-
-    await ctx.respond(f"The Glentre is now {status}!")
-    await ctx.channel.edit(name=prefix + status)
+    await update_glentre_status(ctx)
 
 
 @bot.slash_command(name="eepy", description="For when you're feeling a bit eepy.")
@@ -203,5 +234,5 @@ async def stand(ctx):
         "https://media.discordapp.net/attachments/1020012959369531503/1032745623432208485/Untitled_Artwork.png?width=439&height=754"
     )
 
-
 bot.run(TOKEN)
+
