@@ -28,7 +28,10 @@ async def update_glentre_status(ctx=None):
     if ctx:
         await ctx.respond(msg)
     else:
-        await channel.send(msg)
+        try:
+            await channel.send(msg)
+        except discord.errors.Forbidden:
+            print('could not send message, updating channel status to ' + status)
     await channel.edit(name=GLENTRE_PREFIX + status)
 
 
@@ -42,9 +45,9 @@ class EventLoopCog(commands.Cog):
 
     @tasks.loop(seconds=60.0)
     async def close_glentre(self):
-        now = datetime.now(tz=EST)
-        if (now.hour == 0 and GLENTRE_CLOSED_IDENTIFIER not in bot.get_channel(GLENTRE_STATUS_CHANNEL_ID)):
-                await update_glentre_status()
+        now = datetime.now()
+        if (now.hour == 0 and GLENTRE_CLOSED_IDENTIFIER not in bot.get_channel(GLENTRE_STATUS_CHANNEL_ID).name):
+            await update_glentre_status()
 
 
 @bot.event
