@@ -46,7 +46,7 @@ class EventLoopCog(commands.Cog):
     @tasks.loop(seconds=60.0)
     async def close_glentre(self):
         now = datetime.now()
-        if (now.hour == 0 and GLENTRE_CLOSED_IDENTIFIER not in bot.get_channel(GLENTRE_STATUS_CHANNEL_ID).name):
+        if (now.hour == 23 and GLENTRE_CLOSED_IDENTIFIER not in bot.get_channel(GLENTRE_STATUS_CHANNEL_ID).name):
             await update_glentre_status()
 
 
