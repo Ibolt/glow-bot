@@ -1,13 +1,15 @@
 import discord
 import random
 import aiohttp
+import re # regex
 
 from constants import *
 from datetime import datetime
 from discord.ext import commands, tasks
 
-
-bot = discord.Bot()
+intents = discord.Intents.default()
+intents.message_content = True
+bot = discord.Bot(intents=intents)
 
 async def update_glentre_status(ctx=None):
     channel = None
@@ -55,6 +57,23 @@ async def on_ready():
     bot.add_cog(EventLoopCog(bot))
     print(f"{bot.user} is ready and online!")
 
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    
+    if 'kiss night' in message.content.lower():
+        await message.add_reaction(KISS_NIGHT_REACTION)
+    
+    if ((message.created_at.astimezone(EST).hour == 11 or message.created_at.astimezone(EST).hour == 23) and
+        (message.created_at.astimezone(EST).minute == 11 and
+         message.channel.id == WISH_CHANNEL_ID)
+       ):
+        if re.search('w+i+s+h+', message.content.lower()):
+            await message.add_reaction(WISH_VALID)
+        elif re.search('i+s+h+', message.content.lower()):
+            await message.add_reaction(WISH_INVALID)
+
 
 @bot.slash_command(name="hello", description="Say hi to georbert")
 async def hello(ctx):
@@ -101,10 +120,10 @@ async def hello(ctx):
     # string has a 30% chance to start with a keysmash
     if random.randint(1, 100) < 30:
         for i in range(random.randint(3, 5)):
-            # string is consonants weighted to include more of the middle keys
+            # string is more likely to start with these chars because it looks nicer
             default_str += random.choice("sdfjk")
         for i in range(random.randint(5, 10)):
-            # string is consonants weighted to include more of the middle keys
+            # string is consonants weighted to include more of the middle keys because it looks nicer
             default_str += random.choice("bcdfghjklmnpqrstvwxzasdfghjkli;")
 
     # string has a 30% chance to have an extra intro
@@ -225,7 +244,7 @@ async def eepy(ctx):
 @bot.slash_command(name="zawarudo", description="Weeb.")
 async def stand(ctx):
     await ctx.respond(
-        "https://media.discordapp.net/attachments/1020012959369531503/1032745623432208485/Untitled_Artwork.png?width=439&height=754"
+        "https://cdn.discordapp.com/attachments/996228998902321183/1045457831312248842/unknown.png?width=439&height=754"
     )
 
 bot.run(TOKEN)
