@@ -101,10 +101,10 @@ async def hello(ctx):
     # string has a 30% chance to start with a keysmash
     if random.randint(1, 100) < 30:
         for i in range(random.randint(3, 5)):
-            # string is consonants weighted to include more of the middle keys
+            # string is more likely to start with these chars because it looks nicer
             default_str += random.choice("sdfjk")
         for i in range(random.randint(5, 10)):
-            # string is consonants weighted to include more of the middle keys
+            # string is consonants weighted to include more of the middle keys because it looks nicer
             default_str += random.choice("bcdfghjklmnpqrstvwxzasdfghjkli;")
 
     # string has a 30% chance to have an extra intro
