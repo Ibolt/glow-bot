@@ -1,7 +1,7 @@
 import discord
 import random
 import aiohttp
-import re # regex
+import re
 
 from constants import *
 from datetime import datetime
@@ -10,6 +10,7 @@ from discord.ext import commands, tasks
 intents = discord.Intents.default()
 intents.message_content = True
 bot = discord.Bot(intents=intents)
+
 
 async def update_glentre_status(ctx=None):
     channel = None
@@ -33,7 +34,7 @@ async def update_glentre_status(ctx=None):
         try:
             await channel.send(msg)
         except discord.errors.Forbidden:
-            print('could not send message, updating channel status to ' + status)
+            print("could not send message, updating channel status to " + status)
     await channel.edit(name=GLENTRE_PREFIX + status)
 
 
@@ -48,7 +49,11 @@ class EventLoopCog(commands.Cog):
     @tasks.loop(seconds=60.0)
     async def close_glentre(self):
         now = datetime.now()
-        if (now.hour == 23 and GLENTRE_CLOSED_IDENTIFIER not in bot.get_channel(GLENTRE_STATUS_CHANNEL_ID).name):
+        if (
+            now.hour == 23
+            and GLENTRE_CLOSED_IDENTIFIER
+            not in bot.get_channel(GLENTRE_STATUS_CHANNEL_ID).name
+        ):
             await update_glentre_status()
 
 
@@ -57,21 +62,25 @@ async def on_ready():
     bot.add_cog(EventLoopCog(bot))
     print(f"{bot.user} is ready and online!")
 
+
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
         return
-    
-    if 'kiss night' in message.content.lower():
+
+    if "kiss night" in message.content.lower():
         await message.add_reaction(KISS_NIGHT_REACTION)
-    
-    if ((message.created_at.astimezone(EST).hour == 11 or message.created_at.astimezone(EST).hour == 23) and
-        (message.created_at.astimezone(EST).minute == 11 and
-         message.channel.id == WISH_CHANNEL_ID)
-       ):
-        if re.search('w+i+s+h+', message.content.lower()):
+
+    if (
+        message.created_at.astimezone(EST).hour == 11
+        or message.created_at.astimezone(EST).hour == 23
+    ) and (
+        message.created_at.astimezone(EST).minute == 11
+        and message.channel.id == WISH_CHANNEL_ID
+    ):
+        if re.search("w+i+s+h+", message.content.lower()):
             await message.add_reaction(WISH_VALID)
-        elif re.search('i+s+h+', message.content.lower()):
+        elif re.search("i+s+h+", message.content.lower()):
             await message.add_reaction(WISH_INVALID)
 
 
@@ -247,5 +256,5 @@ async def stand(ctx):
         "https://cdn.discordapp.com/attachments/996228998902321183/1045457831312248842/unknown.png?width=439&height=754"
     )
 
-bot.run(TOKEN)
 
+bot.run(TOKEN)
