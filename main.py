@@ -6,8 +6,9 @@ from constants import *
 from datetime import datetime
 from discord.ext import commands, tasks
 
-
-bot = discord.Bot()
+intents = discord.Intents.default()
+intents.message_content = True
+bot = discord.Bot(intents=intents)
 
 async def update_glentre_status(ctx=None):
     channel = None
@@ -54,6 +55,14 @@ class EventLoopCog(commands.Cog):
 async def on_ready():
     bot.add_cog(EventLoopCog(bot))
     print(f"{bot.user} is ready and online!")
+
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    
+    if 'kissing night' in message.content:
+        await message.add_reaction("‼️")
 
 
 @bot.slash_command(name="hello", description="Say hi to georbert")
