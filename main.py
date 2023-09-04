@@ -244,7 +244,7 @@ async def eepy(ctx):
 @bot.slash_command(name="zawarudo", description="Weeb.")
 async def stand(ctx):
     await ctx.respond(
-        "https://media.discordapp.net/attachments/1020012959369531503/1032745623432208485/Untitled_Artwork.png?width=439&height=754"
+        "https://cdn.discordapp.com/attachments/996228998902321183/1045457831312248842/unknown.png?width=439&height=754"
     )
 
 bot.run(TOKEN)
