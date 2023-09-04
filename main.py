@@ -62,7 +62,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
     
-    if 'kiss night' in message.content.lower():
+    if 'kiss night' or 'kissing night'  in message.content.lower():
         await message.add_reaction(KISS_NIGHT_REACTION)
     
     if ((message.created_at.astimezone(EST).hour == 11 or message.created_at.astimezone(EST).hour == 23) and
