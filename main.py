@@ -1,6 +1,7 @@
 import discord
 import random
 import aiohttp
+import re # regex
 
 from constants import *
 from datetime import datetime
@@ -61,11 +62,17 @@ async def on_message(message):
     if message.author == bot.user:
         return
     
-    if 'kissing night' in message.content.lower():
-        await message.add_reaction("‼️")
+    if 'kiss night' in message.content.lower():
+        await message.add_reaction(KISS_NIGHT_REACTION)
     
-    if 'wish' in message.content:
-        await message.add_reaction("‼️")
+    if ((message.created_at.astimezone(EST).hour == 11 or message.created_at.astimezone(EST).hour == 23) and
+        (message.created_at.astimezone(EST).minute == 11 and
+         message.channel.id == WISH_CHANNEL_ID)
+       ):
+        if re.search('w+i+s+h+', message.content.lower()):
+            await message.add_reaction(WISH_VALID)
+        elif re.search('i+s+h+', message.content.lower()):
+            await message.add_reaction(WISH_INVALID)
 
 
 @bot.slash_command(name="hello", description="Say hi to georbert")
