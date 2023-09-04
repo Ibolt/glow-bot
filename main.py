@@ -61,7 +61,10 @@ async def on_message(message):
     if message.author == bot.user:
         return
     
-    if 'kissing night' in message.content:
+    if 'kissing night' in message.content.lower():
+        await message.add_reaction("‼️")
+    
+    if 'wish' in message.content:
         await message.add_reaction("‼️")
 
 
