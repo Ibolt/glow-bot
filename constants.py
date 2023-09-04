@@ -1,8 +1,9 @@
 from datetime import timedelta, timezone
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from os import getenv
-# load_dotenv()
-import pytz # timezones
+import pytz
+
+load_dotenv()
 
 # ENV Vars for Bot
 GUILD = int(getenv("GUILD_ID"))
