@@ -9,7 +9,6 @@ load_dotenv()
 GUILD = int(getenv("GUILD_ID"))
 TOKEN = getenv("DISCORD_TOKEN")
 GLENTRE_STATUS_CHANNEL_ID = int(getenv("GLENTRE_STATUS_CHANNEL_ID"))
-WISH_CHANNEL_ID = int(getenv("WISH_CHANNEL_ID"))
 
 # Glentre closing task constants
 EST = pytz.timezone("US/Eastern")
@@ -22,6 +21,7 @@ GLENTRE_OPEN_STATUS = "open ✅"
 KISS_NIGHT_REACTION = "‼️"
 
 # Wishing constants
+WISH_CHANNEL_ID = int(getenv("WISH_CHANNEL_ID"))
 WISH_INVALID = "❓"
 WISH_SPECIAL = { # must be ordered in decreasing length so that there are no conficts because of substrings 
     "accomplish" : "🏆",
@@ -73,10 +73,4 @@ WISH_SPECIAL = { # must be ordered in decreasing length so that there are no con
     "bish" : "😢",
 
     #"swish" : "🙏", # idk what emoji to put here
-
-
-
-
-
-
 }
