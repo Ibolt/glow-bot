@@ -22,5 +22,61 @@ GLENTRE_OPEN_STATUS = "open ✅"
 KISS_NIGHT_REACTION = "‼️"
 
 # Wishing constants
-WISH_VALID = "‼️"
 WISH_INVALID = "❓"
+WISH_SPECIAL = { # must be ordered in decreasing length so that there are no conficts because of substrings 
+    "accomplish" : "🏆",
+    "extinguish" : "🧯",
+    "outlandish" : "🤨",
+    "distinguish" : "🕵️",
+    "horseradish" : "🥪",
+    "gibberish" : "🥴",
+    "stockfish" : "♟️",
+    "shellfish" : "🦪",
+    "replenish" : "🌱",
+    "establish" : "🏦",
+  # "jellyfish" : "🪼", # not available in discord
+    "astonish" : "🤯",
+    "crayfish" : "🦞",
+    "sluggish" : "🐌",
+    "flourish" : "😎",
+    "skirmish" : "🤺",
+    "snobbish" : "🧐",
+    "vanquish" : "⚔️",
+    "starfish" : "⭐",
+    "demolish" : "💥",
+    "british" : "🇬🇧",
+    "anguish" : "💀",
+    "bullish" : "📈",
+    "bearish" : "📉",
+    "abolish" : "🙅",
+    "publish" : "📰",
+    "garnish" : "🍝",
+    "stylish" : "🤵",
+    "rubbish" : "🗑️",
+    "furnish" : "🪑",
+    "selfish" : "👿",
+    "delish" : "😋",
+    "perish" : "🪦",
+    "squish" : "🥺",
+    "famish" : "😫",
+    "radish" : "🥗",
+    "polish" : "🇵🇱",
+    "fetish" : "😳",
+    "elvish" : "🧝",
+    "relish" : "🌭",
+    "vanish" : "🫥",
+    "banish" : "🚶",
+    "irish" : "🇮🇪",
+    "wish" : "🙏",
+    "fish" : "🐟",
+    "dish" : "🍽️",
+    "bish" : "😢",
+
+    #"swish" : "🙏", # idk what emoji to put here
+
+
+
+
+
+
+}
