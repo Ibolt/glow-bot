@@ -78,8 +78,14 @@ async def on_message(message):
         message.created_at.astimezone(EST).minute == 11
         and message.channel.id == WISH_CHANNEL_ID
     ):
+        for special in WISH_SPECIAL:
+            if special in message.content.lower():
+                await message.add_reaction(WISH_SPECIAL[special])
+                return
+
+        # there's an entry in the dictionary for "wish" but this matches stuff like "wiiishhh"
         if re.search("w+i+s+h+", message.content.lower()):
-            await message.add_reaction(WISH_VALID)
+            await message.add_reaction(WISH_SPECIAL["wish"])
         elif re.search("i+s+h+", message.content.lower()):
             await message.add_reaction(WISH_INVALID)
 
@@ -173,6 +179,7 @@ async def hello(ctx):
             "Check your posture!",
             "Take a break from your screen every now and then!",
             "\nIn case you didn't know, the glow center is located in the 3rd floor SLC! Come say hi!",
+            "Did you know? There are " + str(len(WISH_SPECIAL)) + " special wishes I can grant!"
         ]
         await ctx.respond(default_str + " " + random.choice(quip))
 
