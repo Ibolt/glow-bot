@@ -79,7 +79,7 @@ async def on_message(message):
         and message.channel.id == WISH_CHANNEL_ID
     ):
         for special in WISH_SPECIAL:
-            if special in message.content.lower():
+            if special.lower() in message.content.lower():
                 await message.add_reaction(WISH_SPECIAL[special])
                 return
 
@@ -89,6 +89,9 @@ async def on_message(message):
         elif re.search("i+s+h+", message.content.lower()):
             await message.add_reaction(WISH_INVALID)
 
+@bot.slash_command(name="num-wishes", description="Ask georbert how many -ish words he knows")
+async def hello(ctx):
+    await ctx.respond("I know " + str(len(WISH_SPECIAL)) + " words that end with -ish!") 
 
 @bot.slash_command(name="hello", description="Say hi to georbert")
 async def hello(ctx):
