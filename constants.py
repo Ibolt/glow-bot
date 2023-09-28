@@ -24,16 +24,18 @@ KISS_NIGHT_REACTION = "‼️"
 WISH_CHANNEL_ID = int(getenv("WISH_CHANNEL_ID"))
 WISH_INVALID = "❓"
 WISH_SPECIAL = { # must be ordered in decreasing length so that there are no conficts because of substrings 
+    "distinguish" : "🕵️",
+    "horseradish" : "🥪",
+    "impoverish" : "🥀",
     "accomplish" : "🏆",
     "extinguish" : "🧯",
     "outlandish" : "🤨",
-    "distinguish" : "🕵️",
-    "horseradish" : "🥪",
     "gibberish" : "🥴",
     "stockfish" : "♟️",
     "shellfish" : "🦪",
     "replenish" : "🌱",
     "establish" : "🏦",
+    "squeamish" : "😖",
   # "jellyfish" : "🪼", # not available in discord
     "astonish" : "🤯",
     "crayfish" : "🦞",
@@ -46,6 +48,7 @@ WISH_SPECIAL = { # must be ordered in decreasing length so that there are no con
     "demolish" : "💥",
     "british" : "🇬🇧",
     "anguish" : "💀",
+    "finnish" : "🇫🇮",
     "bullish" : "📈",
     "bearish" : "📉",
     "abolish" : "🙅",
@@ -55,6 +58,7 @@ WISH_SPECIAL = { # must be ordered in decreasing length so that there are no con
     "rubbish" : "🗑️",
     "furnish" : "🪑",
     "selfish" : "👿",
+    "swedish" : "🇸🇪",
     "delish" : "😋",
     "perish" : "🪦",
     "squish" : "🥺",
@@ -66,11 +70,15 @@ WISH_SPECIAL = { # must be ordered in decreasing length so that there are no con
     "relish" : "🌭",
     "vanish" : "🫥",
     "banish" : "🚶",
+    "finish" : "🏁",
+    "lavish" : "🍾",
+    "jewish" : "🕎",
     "irish" : "🇮🇪",
+    "phish" : "📧",
+    "swish" : "💫",
+    "amish" : "👨‍🌾",
     "wish" : "🙏",
     "fish" : "🐟",
     "dish" : "🍽️",
     "bish" : "😢",
-
-    #"swish" : "🙏", # idk what emoji to put here
 }
