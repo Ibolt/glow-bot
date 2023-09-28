@@ -79,7 +79,7 @@ async def on_message(message):
         and message.channel.id == WISH_CHANNEL_ID
     ):
         for special in WISH_SPECIAL:
-            if special in message.content.lower():
+            if special.lower() in message.content.lower():
                 await message.add_reaction(WISH_SPECIAL[special])
                 return
 
