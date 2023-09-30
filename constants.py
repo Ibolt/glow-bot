@@ -1,9 +1,9 @@
 from datetime import timedelta, timezone
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from os import getenv
 import pytz
 
-load_dotenv()
+# load_dotenv()
 
 # ENV Vars for Bot
 GUILD = int(getenv("GUILD_ID"))
@@ -50,6 +50,7 @@ WISH_SPECIAL = { # must be ordered in decreasing length so that there are no con
     "childish" : "👶",
     "scottish" : "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
     "blowfish" : "🐡",
+    "spanish" : "🇪🇸",
     "british" : "🇬🇧",
     "anguish" : "💀",
     "finnish" : "🇫🇮",
@@ -58,6 +59,7 @@ WISH_SPECIAL = { # must be ordered in decreasing length so that there are no con
     "abolish" : "🙅",
     "publish" : "📰",
     "garnish" : "🍝",
+    "turkish" : "🇹🇷",
     "stylish" : "🤵",
     "rubbish" : "🗑️",
     "furnish" : "🪑",
