@@ -78,15 +78,16 @@ async def on_message(message):
         message.created_at.astimezone(EST).minute == 11
         and message.channel.id == WISH_CHANNEL_ID
     ):
+        reacted = False
         for special in WISH_SPECIAL:
-            if special.lower() in message.content.lower():
+            if re.search("\\b" + special.lower() + "\\b", message.content.lower()):
                 await message.add_reaction(WISH_SPECIAL[special])
-                return
+                reacted = True
 
         # there's an entry in the dictionary for "wish" but this matches stuff like "wiiishhh"
-        if re.search("w+i+s+h+", message.content.lower()):
+        if re.search("\\bw+i+s+h+\\b", message.content.lower()):
             await message.add_reaction(WISH_SPECIAL["wish"])
-        elif re.search("i+s+h+", message.content.lower()):
+        elif not reacted and  re.search("i+s+h+\\b", message.content.lower()):
             await message.add_reaction(WISH_INVALID)
 
 @bot.slash_command(name="num-wishes", description="Ask georbert how many -ish words he knows")
