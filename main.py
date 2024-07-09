@@ -83,6 +83,11 @@ async def on_message(message):
             if re.search("\\b" + special.lower() + "\\b", message.content.lower()):
                 await message.add_reaction(WISH_SPECIAL[special])
                 reacted = True
+                
+                # fish reaction has 1% chance to add an RGB spinning fish gif
+                if (special.lower() == "fish") and (random.randint(1, 100) == 1):
+                    await message.respond("https://media.discordapp.net/attachments/1096856874936172626/1172346715580403833/JoelJam.gif") 
+
 
         # there's an entry in the dictionary for "wish" but this matches stuff like "wiiishhh"
         if re.search("\\bw+i+s+h+\\b", message.content.lower()):
