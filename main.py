@@ -86,7 +86,7 @@ async def on_message(message):
                 
                 # fish reaction has 1% chance to add an RGB spinning fish gif
                 if (special.lower() == "fish") and (random.randint(1, 100) == 1):
-                    await message.respond("https://media.discordapp.net/attachments/1096856874936172626/1172346715580403833/JoelJam.gif") 
+                    await message.reply("https://media.discordapp.net/attachments/1096856874936172626/1172346715580403833/JoelJam.gif") 
 
 
         # there's an entry in the dictionary for "wish" but this matches stuff like "wiiishhh"
